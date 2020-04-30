@@ -1,30 +1,48 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import Constants from 'expo-constants';
 import Header from './components/header';
-import Stats from './components/statsPage/stats';
-import Countries from './components/country/countries';
+import Stats from './components/stats';
+import Countries from './components/countries';
 import Statistics from './components/statistics';
-
 import ApolloClient from 'apollo-boost';
+import get_stats from './queries';
+import { ApolloProvider } from "@apollo/react-hooks";
 
-const client = new ApolloClient({
-  uri: 'https://covid19-graphql.netlify.app/'
-});
-
-import { ApolloProvider } from '@apollo/react-hooks';
-
-// You can import from local files
-import AssetExample from './components/AssetExample';
 
 export default function App() {
+
+  const client = new ApolloClient({
+    uri: 'https://covid19-graphql.netlify.app/'
+  });
+  
   const date = (Date()).toString();
+  const[data, setData] = useState([]);
+  //const { loading, error, data } = useQuery(get_stats);
+
+  useEffect(
+    function requestData() {
+      client.query({
+        query: get_stats
+      })
+      .then(response => {
+        console.log(response);
+        //console.log(response)
+      })
+      .catch(error => {
+        console.log('ERROR ==>', error)
+      })
+    }, []
+  );
+ 
+
+
+  
   return (
     <ApolloProvider client={client}>
       <View style={styles.container}>
         <Header/>
         <Stats/>
-        <Countries/>
+        <Countries />
         <Statistics/>
         <Text style={{textAlign:'right'}}>Last Updated:{date}</Text>
       </View>
