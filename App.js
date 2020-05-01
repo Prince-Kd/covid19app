@@ -9,7 +9,7 @@ import get_stats from './queries';
 import { ApolloProvider } from "@apollo/react-hooks";
 
 
-export default function App() {
+export default function App(props) {
 
   const client = new ApolloClient({
     uri: 'https://covid19-graphql.netlify.app/'
@@ -17,33 +17,35 @@ export default function App() {
   
   const date = (Date()).toString();
   const[data, setData] = useState([]);
+  
   //const { loading, error, data } = useQuery(get_stats);
 
-  useEffect(
-    function requestData() {
+  useEffect(() =>{
+    const requestData = async () => {
       client.query({
-        query: get_stats
+        query: get_stats,
       })
-      .then(response => {
-        console.log(response);
-        //console.log(response)
+      .then(response => { 
+        setData(response.data.countries)
       })
       .catch(error => {
         console.log('ERROR ==>', error)
       })
-    }, []
-  );
- 
+    }
 
+    requestData();
+  }, [data])
+ 
+//console.log(data);
 
   
   return (
     <ApolloProvider client={client}>
       <View style={styles.container}>
         <Header/>
-        <Stats/>
-        <Countries />
-        <Statistics/>
+        <Stats stats = {data}/>
+        <Countries countries = {data}/>
+        <Statistics statistics = {data}/>
         <Text style={{textAlign:'right'}}>Last Updated:{date}</Text>
       </View>
     </ApolloProvider>

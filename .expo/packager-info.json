@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 12608,
-  "expoServerNgrokUrl": "https://ga-m5n.ice-mawuli.covid-19-data-app.exp.direct",
-  "packagerNgrokUrl": "https://packager.ga-m5n.ice-mawuli.covid-19-data-app.exp.direct",
-  "ngrokPid": 2488,
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "webpackServerPort": null
 }

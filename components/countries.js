@@ -1,17 +1,24 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import { Text, View, StyleSheet, Image, Picker} from 'react-native';
-import {graphql} from 'react-apollo';
-import get_stats from '../queries';
 
 
-const Countries = () => {
-  const [selectedCountry, setCountry] = useState(null)
-  //console.log(data);
+const Countries = (props) => {
+  const[country, setCountry] = useState([]);
+  const countries = props.countries;
+
+  //console.log(countries)
   return (
     <View>
       <Text style={{paddingBottom:2}}>Select Country:</Text>
       <View style={styles.picker}>
-        <Picker>
+        <Picker 
+        selectedValue = {country}
+        onValueChange={(itemValue, itemIndex) => setCountry(itemValue)}>
+          {
+            countries.map((c)=>{
+              <Picker.Item label={c.country} value={c.country}/> 
+            })
+          }
         </Picker>
       </View>
     </View>
